@@ -57,6 +57,7 @@
 
     <script>
         let player;
+        let isReady = false;
         const btn = document.getElementById('start-btn');
         const textElement = document.getElementById('glitch-text');
 
@@ -64,12 +65,15 @@
             player = new YT.Player('player', {
                 height: '360',
                 width: '640',
-                videoId: 'QGm7W0KZen4', // Initial video loaded
+                videoId: 'QGm7W0KZen4',
                 playerVars: { 
                     'autoplay': 0, 
                     'loop': 1, 
                     'playlist': 'QGm7W0KZen4',
                     'enablejsapi': 1 
+                },
+                events: {
+                    'onReady': () => { isReady = true; }
                 }
             });
         }
@@ -90,9 +94,9 @@
         btn.addEventListener('click', () => {
             btn.style.display = 'none';
             
-            // Wait 3.5 seconds (3500ms) then play
+            // Wait 3.5 seconds then play
             setTimeout(() => {
-                if (player && typeof player.playVideo === 'function') {
+                if (isReady && player) {
                     player.playVideo();
                 }
             }, 3500);
