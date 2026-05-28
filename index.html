@@ -8,20 +8,16 @@
             height: 100vh;
             margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
-            animation: fadeIn 3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         #glitch-text {
             font-size: 2rem;
+            margin-bottom: 20px;
             animation: pulse 4s infinite alternate;
         }
 
@@ -47,20 +43,15 @@
             transition: 0.3s;
             z-index: 10;
         }
-
-        #start-btn:hover {
-            color: #800000;
-            border-color: #800000;
-            text-shadow: 0 0 5px #ff0000;
-        }
     </style>
 </head>
 <body>
 
-    <button id="start-btn">BEGIN</button>
     <div id="glitch-text">ARE YOU ALONE?</div>
     
-    <div id="player" style="display:none;"></div>
+    <div id="player"></div>
+
+    <button id="start-btn">BEGIN</button>
 
     <script src="https://www.youtube.com/iframe_api"></script>
 
@@ -71,13 +62,13 @@
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '0',
-                width: '0',
-                videoId: 'olL0XFoPRZk',
+                height: '360',
+                width: '640',
+                videoId: 'QGm7W0KZen4', // Initial video loaded
                 playerVars: { 
                     'autoplay': 0, 
                     'loop': 1, 
-                    'playlist': 'olL0XFoPRZk',
+                    'playlist': 'QGm7W0KZen4',
                     'enablejsapi': 1 
                 }
             });
@@ -98,9 +89,14 @@
 
         btn.addEventListener('click', () => {
             btn.style.display = 'none';
-            if (player && typeof player.playVideo === 'function') {
-                player.playVideo();
-            }
+            
+            // Wait 3.5 seconds (3500ms) then play
+            setTimeout(() => {
+                if (player && typeof player.playVideo === 'function') {
+                    player.playVideo();
+                }
+            }, 3500);
+            
             triggerGlitch();
         });
     </script>
